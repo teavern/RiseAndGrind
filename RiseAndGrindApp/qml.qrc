@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>HRArmor.csv</file>
+        <file>Skills.csv</file>
+        <file>Decorations.csv</file>
+    </qresource>
+</RCC>
