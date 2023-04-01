@@ -11,7 +11,6 @@ SOURCES += \
         armorset.cpp \
         decoration.cpp \
         engine.cpp \
-        equipmentdatabase.cpp \
         fittedarmorpiece.cpp \
         main.cpp \
         searchparameters.cpp \
@@ -38,7 +37,6 @@ HEADERS += \
     armorset.h \
     decoration.h \
     engine.h \
-    equipmentdatabase.h \
     fittedarmorpiece.h \
     searchparameters.h \
     setreport.h \

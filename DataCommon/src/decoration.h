@@ -2,6 +2,8 @@
 #define DECORATION_H
 
 #include <QObject>
+#include <QJsonObject>
+
 #include "skill.h"
 /**
  * @brief Represents a single decoration in the game
@@ -24,6 +26,18 @@ public:
      * @return
      */
     Skill * getDecoSkill();
+    /**
+     * @brief Converts the instance of the object into JSON representation, setting its skill to the skill ID
+     * @return
+     */
+    QJsonObject ToJSON();
+    /**
+     * @brief Loads new skill from JSON
+     * @param json JSON object to load
+     * @param loadedSkills Vector of skills previoulsy loaded to match the decos skill with
+     */
+    void FromJSON(QJsonObject &json, std::vector<Skill *> &loadedSkills);
+    QString ToString();
     ~Decoration();
 private:
     /**

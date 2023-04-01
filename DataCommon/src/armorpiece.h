@@ -2,6 +2,8 @@
 #define ARMORPIECE_H
 
 #include <QVector>
+#include <QJsonObject>
+#include <QJsonArray>
 #include <vector>
 #include <map>
 #include "skill.h"
@@ -54,6 +56,14 @@ public:
     qint16 getSlotLevelA();
     qint16 getSlotLevelB();
     qint16 getSlotLevelC();
+    QJsonObject ToJSON();
+    /**
+     * @brief Load armor from JSON object
+     * @param json JSON object of the armor
+     * @param skills Vector of all loaded skills
+     * @return
+     */
+    void FromJSON(QJsonObject &json, std::vector<Skill *> &skills);
 private:
     /**
      * @brief What slot the armor piece goes to
@@ -93,13 +103,20 @@ private:
      */
     qint16 decoSlotLevelC;
 
-    qint16 defenceMin;
-    qint16 defenceMax;
+    qint16 defenseMin;
+    qint16 defenseMax;
     qint16 fireRes;
     qint16 waterRes;
     qint16 lightRes;
     qint16 iceRes;
     qint16 dragonRes;
+    /**
+     * @brief Finds and returns the reference to a skill in a given list by its ID
+     * @param id
+     * @param skillList
+     * @return
+     */
+    Skill * findSkill(qint16 id, vector<Skill*> skillList);
 
 signals:
 

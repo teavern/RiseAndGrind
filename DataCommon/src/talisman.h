@@ -2,6 +2,8 @@
 #define TALISMAN_H
 
 #include <QObject>
+#include <QJsonObject>
+#include <QJsonArray>
 #include <vector>
 #include "skill.h"
 #include "decoration.h"
@@ -24,17 +26,12 @@ public:
      */
     explicit Talisman(map<qint16, qint16> skillList, qint16 slotALevel, qint16 slotBLevel, qint16 slotCLevel);
     /**
-     * @brief Add a decoration to the selected decoration slot, zero indexed.
-     * @param d Reference of the decoration from the database to add
-     * @param decoSlot Slot, zero indexed, to apply the decoration too
-     * @return 0 if successful, -1 if failed, -2 if deco level exceeds slot level.
-     */
-    int addDecoration(Decoration * d, qint16 decoSlot);
-    /**
      * @brief Calculates the levels for each of the skills the decoration has
      * @return map<skill ID, skill level>
      */
     map<qint16, qint16> getSkillLevels();
+
+    QJsonObject toJSON();
 private:
     /**
      * @brief Map of skills<skill Id, skill level> the talisman has

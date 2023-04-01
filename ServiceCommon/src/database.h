@@ -1,36 +1,47 @@
-#ifndef EQUIPMENTDATABASE_H
-#define EQUIPMENTDATABASE_H
+#ifndef DATABASE_H
+#define DATABASE_H
 
+#include "../DataCommon/src/armorpiece.h"
+#include "../DataCommon/src/weapon.h"
+#include "../DataCommon/src/talisman.h"
+#include "../DataCommon/src/weapon.h"
+#include "../DataCommon/src/decoration.h"
+#include "../DataCommon/src/skill.h"
+#include "../DataCommon/src/riseexception.h"
+
+#include <vector>
 #include <QObject>
 #include <QTextStream>
 #include <QFile>
+#include <QDir>
 #include <QDebug>
-
-#include "armorpiece.h"
-#include "weapon.h"
-#include "talisman.h"
-#include "weapon.h"
-#include "decoration.h"
-#include "skill.h"
-#include <vector>
+#include <filesystem>
+#include <QJsonObject>
+#include <QJsonDocument>
 /**
- * @brief Class containing all the equipment data loaded on startup.
- * This class is used as data for the combinatorics engine.
- * Also contains functions for loading data from CSV.
+ * @brief Database service for locally holding loaded skills
  */
 using namespace::std;
-class EquipmentDatabase
+class Database
 {
 public:
-    EquipmentDatabase();
+    Database();
     /**
       * @brief Destructor
       */
-    ~EquipmentDatabase();
+    ~Database();
     /**
      * @brief Load all the data from CSV into their respective vectors
      */
-    void LoadData();
+    void LoadData(QString);
+    /**
+     * @brief Creates the database files inside a new directory in the present working directory
+     */
+    void SaveData(QString);
+    /**
+     * @brief Saves the contents of the database to JSON format
+     */
+    void saveData();
     vector<ArmorPiece *> GetHeadPieces();
     vector<ArmorPiece *> GetBodyPieces();
     vector<ArmorPiece *> GetArmPieces();
@@ -55,21 +66,30 @@ public:
      * @return
      */
     Decoration * FindDecoBySkillId(qint16 skillId);
+
+    /**
+     * @brief Loads all entries from d into current instance through deep copying
+     */
+    void mergeDatabase(Database * d);
+    /**
+     * @brief Converts the database into a JSON object
+     */
+    QJsonObject ToJSON();
 private:
-    qint16 LoadArmor();
+    qint16 LoadArmor(QString);
     /**
     * @brief Load all the skills from the skills CSV. Skills are the lowest and most
     * important dataset. Every single instance of a skill in the program should be
     * a reference to an object in the skills database.
     * @return
     */
-    qint16 LoadSkills();
-    qint16 LoadDecorations();
+    qint16 LoadSkills(QString);
+    qint16 LoadDecorations(QString);
     /**
      * @brief Loads all talismans from the talisman database file
      * @return
      */
-    qint16 LoadTalismans();
+    qint16 LoadTalismans(QString);
     /**
      * @brief Parses slots into an array from a pipe-delimited string
      * @param The string to parse (E.G. 3|2|0)
@@ -102,7 +122,6 @@ private:
      * @brief Vector of skills loaded into memory from a file.
      */
     vector<Skill *> skills;
-
 };
 
-#endif // EQUIPMENTDATABASE_H
+#endif // DATABASE_H

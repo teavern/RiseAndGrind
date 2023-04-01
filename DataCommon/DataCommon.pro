@@ -13,6 +13,7 @@ SOURCES += \
     src/armorpiece.cpp \
     src/datacommon.cpp \
     src/decoration.cpp \
+    src/riseexception.cpp \
     src/skill.cpp \
     src/talisman.cpp \
     src/weapon.cpp \
@@ -24,6 +25,7 @@ HEADERS += \
     src/armorpiece.h \
     src/datacommon.h \
     src/decoration.h \
+    src/riseexception.h \
     src/skill.h \
     src/talisman.h \
     src/weapon.h \

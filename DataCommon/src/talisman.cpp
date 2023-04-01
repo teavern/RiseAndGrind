@@ -6,10 +6,6 @@ Talisman::Talisman()
     slotA = 0;
     slotB = 0;
     slotC = 0;
-
-    decoA = 0;
-    decoB = 0;
-    decoC = 0;
 }
 
 Talisman::Talisman(map<qint16, qint16> skillList, qint16 slotALevel, qint16 slotBLevel, qint16 slotCLevel) {
@@ -17,47 +13,6 @@ Talisman::Talisman(map<qint16, qint16> skillList, qint16 slotALevel, qint16 slot
     slotA = slotALevel;
     slotB = slotBLevel;
     slotC = slotCLevel;
-
-    decoA = 0;
-    decoB = 0;
-    decoC = 0;
-}
-
-int Talisman::addDecoration(Decoration * d, qint16 decoSlot) {
-    switch (decoSlot) {
-    case 0:
-        if (slotA >= d->getDecoLevel()) {
-            decoA = d;
-            qDebug("Appended decoration %p to slot A", (void *) d);
-            return 0;
-        } else {
-            qDebug("Slot A level is less than decoration %p needs", (void *) d);
-            return -2;
-        }
-        break;
-    case 1:
-        if (slotB >= d->getDecoLevel()) {
-            decoB = d;
-            qDebug("Appended decoration %p to slot B", (void *) d);
-            return 0;
-        } else {
-            qDebug("Slot B level is less than decoration %p needs", (void *) d);
-            return -2;
-        }
-        break;
-    case 2:
-        if (slotC >= d->getDecoLevel()) {
-            decoC = d;
-            qDebug("Appended decoration %p to slot C", (void *) d);
-            return 0;
-        } else {
-            qDebug("Slot C level is less than decoration %p needs", (void *) d);
-            return -2;
-        }
-        break;
-    }
-    qDebug("Decoration %p tried to be applied to an invalid slot", (void *) d);
-    return -1;
 }
 
 map<qint16, qint16> Talisman::getSkillLevels() {
@@ -83,4 +38,22 @@ map<qint16, qint16> Talisman::getSkillLevels() {
         skillMap[decoC->getDecoSkill()->GetSkillId()] = 1;
     }
     return skillMap;
+}
+
+QJsonObject Talisman::toJSON() {
+    QJsonObject obj;
+    obj["slotLevelA"] = this->slotA;
+    obj["slotLevelB"] = this->slotB;
+    obj["slotLevelC"] = this->slotC;
+    if (this->skills.size() > 0) {
+        QJsonArray arr;
+        for (map<qint16, qint16>::iterator it = this->skills.begin(); it != this->skills.end(); it++) {
+            QJsonObject o;
+            o["skillID"] = it->first;
+            o["skillLevel"] = it->second;
+            arr.append(o);
+        }
+        obj["skills"] = arr;
+    }
+    return obj;
 }

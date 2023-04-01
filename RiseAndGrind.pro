@@ -1,7 +1,8 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    ./ArmorTool \
+    ./DatabaseMaster \
     ./DataCommon \
     ./RiseAndGrindApp/RiseAndGrind.pro \
-    ./TaliTool
+    ./EquipmentTool \
+    ServiceCommon
